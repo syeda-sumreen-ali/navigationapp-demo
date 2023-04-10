@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image,Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, Image,Text, TouchableOpacity, Button, StyleSheet, Alert, Dimensions } from 'react-native';
 import { PermissionsAndroid } from 'react-native';
 import {launchCamera} from 'react-native-image-picker';
 import moment from 'moment';
@@ -15,7 +15,10 @@ const PicturePage = () => {
 
   const handleChoosePhoto = () => {
     const options = {
-     mediaType:'photo'
+     mediaType:'photo',
+     width:Dimensions.get('screen').width/2,
+     height:Dimensions.get('screen').height/2
+
     };
     launchCamera(options, (response) => {
       if (response.assets && response.assets[0]) {
@@ -82,7 +85,7 @@ async function requestExternalStoragePermission() {
     <View style={styles.container}>
       <Text style={styles.title}>Take a Picture</Text>
      
-      <TouchableOpacity style={style.button} onPress={handleChoosePhoto} >
+      <TouchableOpacity style={styles.button} onPress={handleChoosePhoto} >
         <Text>Take Photo </Text>
     </TouchableOpacity>
       {image && (
@@ -90,7 +93,7 @@ async function requestExternalStoragePermission() {
           <Image source={{ uri: image }} style={styles.image} />
         </View>
       )}
-      <TouchableOpacity style={style.button} onPress={handleSavePhoto} >
+      <TouchableOpacity style={styles.button} onPress={handleSavePhoto} >
         <Text>Save Photo </Text>
     </TouchableOpacity>
      
@@ -107,6 +110,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  button:{
+    marginTop:10,
+    backgroundColor:'powderblue',
+    height:55,
+    width:200,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:10
   },
   imageContainer: {
     marginTop: 20,
