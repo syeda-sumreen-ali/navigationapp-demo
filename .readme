@@ -1,0 +1,74 @@
+# React Native Project README
+
+## Overview
+
+This project is a React Native app that can be built for Android platforms. It includes everything you need to get started with developing a mobile app using React Native.
+
+## Setup
+
+Before you can run the app, you'll need to set up your development environment. You can follow the official React Native documentation for detailed instructions on how to set up your development environment based on your operating system:
+
+> [React Native - Getting Started](https://reactnative.dev/docs/getting-started)
+
+Here are the basic steps you'll need to follow:
+
+1. Install Node.js and npm on your machine.
+2. Install the React Native CLI globally by running the following command in your terminal: `npm install -g react-native-cli`
+3. Install Android Studio for Android development.
+4. Set up the required SDKs and build tools for each platform.
+
+Once you've completed the setup, you can clone this project from the repository and navigate to the project directory in your terminal.
+
+## Android SDK Versions
+
+This React Native project requires the following Android SDK versions:
+
+- `minSdkVersion`: 24
+- `compileSdkVersion`: 33
+- `targetSdkVersion`: 33
+
+Make sure that you have installed the required SDK versions in Android Studio's SDK Manager before you attempt to build and run the app on a device or emulator.
+
+
+## Running the Project
+
+To run the project on Android, run the following commands in your terminal:
+
+npm install
+react-native run-android
+
+This should start the development server and launch the app on the simulator or connected device.
+
+## Uploading to a Keystore
+
+To upload the app to a keystore for Android, you'll need to generate a signing key and configure your project to use it. Here are the basic steps:
+
+1. Generate a keystore by running the following command in your terminal: `keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000`
+2. Move the `my-release-key.keystore` file to the `android/app` directory of your project.
+3. Create a `gradle.properties` file in the `android` directory of your project if it doesn't already exist. Add the following lines to the file:
+
+Replace `<password>` with the password you used when generating the keystore. 4. Modify the `android/app/build.gradle` file to include the following:
+
+android {
+...
+defaultConfig { ... }
+signingConfigs {
+release {
+storeFile file(MYAPP_UPLOAD_STORE_FILE)
+storePassword MYAPP_UPLOAD_STORE_PASSWORD
+keyAlias MYAPP_UPLOAD_KEY_ALIAS
+keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+}
+}
+buildTypes {
+release {
+...
+signingConfig signingConfigs.release
+}
+}
+}
+
+5. Generate a signed APK by running the following command in your terminal: `cd android && ./gradlew assembleRelease`
+6. The APK file will be generated in the `android/app/build/outputs/apk/release` directory of your project.
+
+That's it! You now have a signed APK that can be uploaded to the Google Play Store.
